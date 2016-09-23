@@ -254,7 +254,9 @@ public class Programa {
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 					}
 				}
-				
+				if (op == 24){
+					JanelaDeEditarUsuario janEditUsu = new JanelaDeEditarUsuario();
+				}
 				
 			}while(op != 6);
 		}

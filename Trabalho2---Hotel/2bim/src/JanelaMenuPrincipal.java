@@ -36,6 +36,7 @@ public class JanelaMenuPrincipal {
 	private JMenuItem excluirServico;
 	private JMenuItem excluirProduto;
 	private JMenuItem editarServico;
+	private JMenuItem editarUsuario;
 	private JMenuItem editarProduto;
 	private JMenuItem cadServico;
 	private JMenuItem cadProduto;
@@ -187,6 +188,12 @@ public class JanelaMenuPrincipal {
 				menuEditar.add(editarServico);
 				editarServico.setText("Serviço");
 				editarServico.addActionListener(new Lis16());
+			}
+			{
+				editarUsuario = new JMenuItem();
+				menuEditar.add(editarUsuario);
+				editarUsuario.setText("Usuário");
+				editarUsuario.addActionListener(new Lis24());
 			}
 		}
 		{
@@ -399,6 +406,13 @@ public class JanelaMenuPrincipal {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			op = 23;
+			frame.dispose();
+		}
+	}
+	private class Lis24 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			op = 24;
 			frame.dispose();
 		}
 	}

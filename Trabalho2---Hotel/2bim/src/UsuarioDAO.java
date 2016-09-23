@@ -37,26 +37,17 @@ public class UsuarioDAO {
 
 	}
 
-	public void edita(Cliente cliente, int cod) {
-		String sql = "UPDATE `hotel`.`cliente` SET `nome` = ?, `rua` = ?, `numero` = ?, `cidade` = ?, `uf` = ?, `cep` = ?, `cpf` = ?, `identidade` = ?, `telefone` = ?, `email` = ?, `dataNasc` = ? WHERE `cliente`.`cod` =?;";
+	public void edita(Usuario usuario, int cod) {
+		String sql = "UPDATE `hotel`.`usuario` SET `nome` = ?, `login` = ?, `senha` = ? WHERE `usuario`.`cod` =?;";
 		PreparedStatement stmt;
 
 		try {
 			stmt = conexao.prepareStatement(sql);
 
-			stmt.setString(1, cliente.getNome());
-			stmt.setString(2, cliente.getRua());
-			stmt.setInt(3, cliente.getNumero());
-			stmt.setString(4, cliente.getCidade());
-			stmt.setString(5, cliente.getUf());
-			stmt.setString(6, cliente.getCep());
-			stmt.setString(7, cliente.getCpf());
-			stmt.setString(8, cliente.getIdentidade());
-			stmt.setString(9, cliente.getTelefone());
-			stmt.setString(10, cliente.getEmail());
-			stmt.setDate(11, new java.sql.Date(cliente.getDataNasc()
-					.getTimeInMillis()));
-			stmt.setInt(12, cod);
+			stmt.setString(1, usuario.getNome());
+			stmt.setString(2, usuario.getLogin());
+			stmt.setString(3, usuario.getSenha());
+			stmt.setInt(4, cod);
 
 			stmt.execute();
 
@@ -90,6 +81,7 @@ public class UsuarioDAO {
 
 		while (rs.next()) {
 			Usuario usuario = new Usuario();
+			usuario.setCod(rs.getInt("cod"));
 			usuario.setNome(rs.getString("nome"));
 			usuario.setLogin(rs.getString("login"));
 			usuario.setSenha(rs.getString("senha"));
@@ -130,8 +122,8 @@ public class UsuarioDAO {
 		}
 	}
 
-	public ArrayList<Cliente> listaPorCod(int cod) throws SQLException {
-		String sql = "SELECT * FROM cliente WHERE cliente.cod = ?";
+	public ArrayList<Usuario> listaPorCod(int cod) throws SQLException {
+		String sql = "SELECT * FROM usuario WHERE usuario.cod = ?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = conexao.prepareStatement(sql);
@@ -144,32 +136,16 @@ public class UsuarioDAO {
 			e.printStackTrace();
 		}
 		ResultSet rs = stmt.executeQuery();
-		ArrayList<Cliente> vetor = new ArrayList<Cliente>();
+		ArrayList<Usuario> vetor = new ArrayList<Usuario>();
 
 		while (rs.next()) {
-			Cliente cliente = new Cliente();
-			cliente.setCod(rs.getInt("cod"));
-			cliente.setNome(rs.getString("nome"));
-			cliente.setRua(rs.getString("rua"));
-			cliente.setNumero(rs.getInt("numero"));
-			cliente.setCidade(rs.getString("cidade"));
-			cliente.setUf(rs.getString("uf"));
-			cliente.setCep(rs.getString("cep"));
-			cliente.setCpf(rs.getString("cpf"));
-			cliente.setIdentidade(rs.getString("identidade"));
-			cliente.setTelefone(rs.getString("telefone"));
-			cliente.setEmail(rs.getString("email"));
-			// DATA--
-			Calendar calen = new GregorianCalendar();
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				calen.setTime(f.parse(rs.getString("dataNasc")));
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-			cliente.setDataNasc(calen);
+			Usuario usuario = new Usuario();
+			usuario.setCod(rs.getInt("cod"));
+			usuario.setNome(rs.getString("nome"));
+			usuario.setLogin(rs.getString("login"));
+			
 
-			vetor.add(cliente);
+			vetor.add(usuario);
 		}
 
 		return vetor;
