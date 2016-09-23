@@ -1,5 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -77,9 +80,36 @@ public class JanelaDeLogin {
 		
 	}
 	private class OkListener  implements ActionListener {
-		@Override
+		@Override		
 		public void actionPerformed(ActionEvent arg0) {
-			if (tfSenha.getText().equals("1234") && (tfNome.getText().equals("admin"))) 
+			ArrayList<Usuario> vetorUsu = new ArrayList<Usuario>();
+
+			Connection conexao = null;
+			UsuarioDAO daoUsuario = null;
+
+			
+			try {
+				conexao = ConnectionFactory.getConnection();
+				daoUsuario = new UsuarioDAO(conexao);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				vetorUsu = daoUsuario.listaTodos();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			boolean acesso = false;
+			
+			for (int i = 0; i < vetorUsu.size(); i++) {
+				if(tfNome.getText().equals(vetorUsu.get(i).getLogin()) && tfSenha.getText().equals(vetorUsu.get(i).getSenha())){
+					acesso = true;
+				}
+			}
+			if (acesso) 
 				frame.dispose();
 			else
 				JOptionPane.showMessageDialog(frame, "Erro! Senha incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);

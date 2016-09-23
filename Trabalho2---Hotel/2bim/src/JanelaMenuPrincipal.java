@@ -50,6 +50,7 @@ public class JanelaMenuPrincipal {
 	private JMenu menuExcluir;
 	private JMenuItem cadCli;
 	private JMenuItem cadQuarto;
+	private JMenuItem cadUsu;
 	
 	private JMenu menuControle;
 	private JMenuItem checkIn;
@@ -93,6 +94,11 @@ public class JanelaMenuPrincipal {
 			menuCadastro.add(cadServico);
 			cadServico.setText("Serviço");
 			cadServico.addActionListener(new Lis12());
+		}{
+			cadUsu = new JMenuItem();
+			menuCadastro.add(cadUsu);
+			cadUsu.setText("Usuário");
+			cadUsu.addActionListener(new Lis23());
 		}
 		//-------------------
 
@@ -386,6 +392,13 @@ public class JanelaMenuPrincipal {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			op = 22;
+			frame.dispose();
+		}
+	}
+	private class Lis23 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			op = 23;
 			frame.dispose();
 		}
 	}
