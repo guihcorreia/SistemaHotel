@@ -18,7 +18,7 @@ public class ClienteDAO {
 	}
 
 	public void adiciona(Cliente cliente) {
-		String sql = "INSERT INTO hotel.cliente (nome, rua, numero, cidade, uf, cep, cpf, identidade, telefone, email, dataNasc, hospedado) VALUES (?,?,?,?,?,?,?,?,?,?,?,false)";
+		String sql = "INSERT INTO hotel.cliente (nome, rua, numero, cidade, uf, cep, cpf, identidade, telefone, email, dataNasc) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement stmt;
 
 		try {
