@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -34,6 +35,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 /**
@@ -88,6 +91,9 @@ public class JanelaDeEditarCliente2 {
 	
 	private int op;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public JanelaDeEditarCliente2(int co) {
 		ArrayList<Cliente> vetor = new ArrayList<Cliente>();
 
@@ -109,12 +115,24 @@ public class JanelaDeEditarCliente2 {
 			e.printStackTrace();
 		}
 		op = vetor.get(0).getCod();
-		lbNum = new JLabel("Numero");
+		lbNum = new JLabel("Numero *");
 		tfNum = new JTextField(2);
+		tfNum.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfNum.setBackground(Color.white);
+			}
+		});
 		tfNum.setText(""+vetor.get(0).getNumero());
 		
-		lbNome = new JLabel("Nome");
+		lbNome = new JLabel("Nome *");
 		tfNome = new JTextField(30);
+		tfNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				tfNome.setBackground(Color.white);
+			}
+		});
 		tfNome.setText(vetor.get(0).getNome());
 		
 		lbEmail = new JLabel("E-mail");
@@ -123,45 +141,63 @@ public class JanelaDeEditarCliente2 {
 
 		lbData = new JLabel("Data");
 		
-		lbIden = new JLabel("Identidade");
+		lbIden = new JLabel("Identidade *");
 		try {
 			MaskFormatter maskIden = new MaskFormatter("UU-##.###.###");
 			tfIden = new JFormattedTextField(maskIden);
+			tfIden.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfIden.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		tfIden.setText(vetor.get(0).getIdentidade());
 		//tfIden = new JTextField(10);
 		
-		lbCPF = new JLabel("CPF");
+		lbCPF = new JLabel("CPF *");
 		try {
 			MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
 			tfCPF = new JFormattedTextField(maskCPF);
+			tfCPF.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfCPF.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		tfCPF.setText(vetor.get(0).getCpf());
 		//tfCPF = new JTextField(10);
 		
-		lbTel = new JLabel("Telefone");
+		lbTel = new JLabel("Telefone *");
 		try {
 			MaskFormatter maskTel = new MaskFormatter("(##)####-####");
 			tfTel = new JFormattedTextField(maskTel);
+			tfTel.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfTel.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		//tfTel = new JTextField(10);
 		tfTel.setText(vetor.get(0).getTelefone());
 
-		lbData = new JLabel("Data de Nascimento");
+		lbData = new JLabel("Data de Nascimento *");
 		
-		lbEndereco = new JLabel("Endereço");
+		lbEndereco = new JLabel("Endere\u00E7o *");
 		
-		lbCEP = new JLabel("CEP");
+		lbCEP = new JLabel("CEP *");
 		
-		lbCidade = new JLabel("Cidade");
+		lbCidade = new JLabel("Cidade *");
 		
-		lbUF = new JLabel("UF");
+		lbUF = new JLabel("UF *");
 		
 		
 		
@@ -169,16 +205,34 @@ public class JanelaDeEditarCliente2 {
 		tfNumero = new JTextField(4);
 		tfNumero.setText(""+vetor.get(0).getNumero());
 		tfEndereco = new JTextField(30);
+		tfEndereco.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfEndereco.setBackground(Color.white);
+			}
+		});
 		tfEndereco.setText(vetor.get(0).getRua());
 		try {
 			MaskFormatter maskCEP = new MaskFormatter("#####-###");
 			tfCEP = new JFormattedTextField(maskCEP);
+			tfCEP.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfCEP.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		tfCEP.setColumns(6);
 		tfCEP.setText(vetor.get(0).getCep());
 		tfCidade = new JTextField(15);
+		tfCidade.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfCidade.setBackground(Color.white);
+			}
+		});
 		tfCidade.setText(vetor.get(0).getCidade());
 		ComboBoxModel cbUFModel = 
 			new DefaultComboBoxModel(
@@ -198,6 +252,12 @@ public class JanelaDeEditarCliente2 {
 //			e.printStackTrace();
 //		}
 		tfData = new JTextField();
+		tfData.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfData.setBackground(Color.white);
+			}
+		});
 		tfData.setColumns(8);
 		Date d = new java.sql.Date(vetor.get(0).getDataNasc().getTimeInMillis());
 		tfData.setText(""+d);
@@ -260,7 +320,7 @@ public class JanelaDeEditarCliente2 {
 		cons.gridx = 1;
 		cons.gridy = 4;
 		panel.add(lbUF, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(3, 3, 3, 3), 0, 0));
-		lbUF.setBounds(283, 238, 24, 16);
+		lbUF.setBounds(283, 238, 33, 16);
 
 		cons.gridy = 5;
 		cons.gridwidth = 1;
@@ -326,7 +386,7 @@ public class JanelaDeEditarCliente2 {
 		cons.gridy = 8;
 		cons.gridwidth = 1;
 		panel.add(lbData, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(3, 3, 3, 3), 0, 0));
-		lbData.setBounds(355, 115, 122, 16);
+		lbData.setBounds(355, 115, 129, 16);
 
 		cons.gridy = 9;
 		cons.gridwidth = 2;
@@ -394,38 +454,164 @@ public class JanelaDeEditarCliente2 {
 	private class MostrarListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Cliente cli = new Cliente();
-			cli.setNome(getTfNome().getText());
-			cli.setRua(getTfEndereco().getText());
-			cli.setNumero(Integer.parseInt(getTfNum().getText()));
-			cli.setCidade(getTfCidade().getText());
-			cli.setUf((String) getTfUF().getSelectedItem());
-			cli.setCep(getTfCEP().getText());
-			cli.setCpf(getTfCPF().getText());
-			cli.setIdentidade(getTfIden().getText());
-			cli.setTelefone(getTfTel().getText());
-			cli.setEmail(getTfEmail().getText());
+			boolean erro = false;
+
+			//ValidaCPF valida = new ValidaCPF();
+			String cpf = tfCPF.getText().substring(0, 3);
+			cpf = cpf + tfCPF.getText().substring(4, 7);
+			cpf = cpf + tfCPF.getText().substring(8, 11);
+			cpf = cpf + tfCPF.getText().substring(12, 14);
 			
-			//DATA--
-			Calendar calen = new GregorianCalendar();
-			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				calen.setTime(f.parse(getTfData().getText()));
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-			cli.setDataNasc(calen);
-			Connection conexao;
-			int codigo = getOp();
-			try {
-				conexao = ConnectionFactory.getConnection();
-				ClienteDAO dao = new ClienteDAO(conexao);
-				dao.edita(cli, codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			
+			if(tfNome.getText() == null || tfNome.getText().isEmpty()){
+				tfNome.setBackground(Color.pink);
+				erro = true;
 			}
 			
-			frame.dispose();
+			if(tfIden.getText().equals("  -  .   .   ")){
+				tfIden.setBackground(Color.pink);
+				erro = true;
+			}
+				
+			if(tfCPF.getText().equals("   .   .   -  ")){
+				tfCPF.setBackground(Color.pink);
+				erro = true;
+			}
+			/*
+			else{
+				if (!ValidaCPF.isCPF(cpf)){
+					JOptionPane.showMessageDialog(frame, "Informe um CPF válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+					erro = true;
+				}
+			}
+			*/
+			
+			if(tfTel.getText().equals("(  )    -    ")){
+				tfTel.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			/*
+			if (tfEmail.getText() != null && !tfEmail.getText().isEmpty()){
+				if(!EmailValidator.isEmailValid(tfEmail.getText())){
+					JOptionPane.showMessageDialog(frame, "Informe um email válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+					erro = true;
+				}
+			}
+			*/
+			if(tfData.getText().equals("  /  /    ")){
+				tfData.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfEndereco.getText() == null || tfEndereco.getText().isEmpty()){
+				tfEndereco.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfNum.getText() == null || tfNum.getText().isEmpty()){
+				tfNum.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfCidade.getText() == null || tfCidade.getText().isEmpty()){
+				tfCidade.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfCEP.getText().equals("     -   ")){
+				tfCEP.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			
+			if (!erro && !ValidaCPF.isCPF(cpf)){
+				JOptionPane.showMessageDialog(frame, "Informe um CPF válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+				erro = true;
+			}
+			else if (!erro && tfEmail.getText() != null && !tfEmail.getText().isEmpty() && !EmailValidator.isEmailValid(tfEmail.getText())){
+				//if(!EmailValidator.isEmailValid(tfEmail.getText())){
+					JOptionPane.showMessageDialog(frame, "Informe um email válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+					erro = true;
+				}
+			else if(!erro){
+				Cliente cli = new Cliente();
+				cli.setNome(getTfNome().getText());
+				cli.setRua(getTfEndereco().getText());
+				cli.setNumero(Integer.parseInt(getTfNum().getText()));
+				cli.setCidade(getTfCidade().getText());
+				cli.setUf((String) getTfUF().getSelectedItem());
+				cli.setCep(getTfCEP().getText());
+				cli.setCpf(getTfCPF().getText());
+				cli.setIdentidade(getTfIden().getText());
+				cli.setTelefone(getTfTel().getText());
+				cli.setEmail(getTfEmail().getText());
+				
+				//DATA--
+				Calendar calen = new GregorianCalendar();
+				SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					calen.setTime(f.parse(getTfData().getText()));
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				cli.setDataNasc(calen);
+				Connection conexao;
+				int codigo = getOp();
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ClienteDAO dao = new ClienteDAO(conexao);
+					dao.edita(cli, codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				frame.dispose();
+			}
+			else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			
+			/*
+			
+			if(!erro){
+				Cliente cli = new Cliente();
+				cli.setNome(getTfNome().getText());
+				cli.setRua(getTfEndereco().getText());
+				cli.setNumero(Integer.parseInt(getTfNum().getText()));
+				cli.setCidade(getTfCidade().getText());
+				cli.setUf((String) getTfUF().getSelectedItem());
+				cli.setCep(getTfCEP().getText());
+				cli.setCpf(getTfCPF().getText());
+				cli.setIdentidade(getTfIden().getText());
+				cli.setTelefone(getTfTel().getText());
+				cli.setEmail(getTfEmail().getText());
+				
+				//DATA--
+				Calendar calen = new GregorianCalendar();
+				SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					calen.setTime(f.parse(getTfData().getText()));
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				cli.setDataNasc(calen);
+				Connection conexao;
+				int codigo = getOp();
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ClienteDAO dao = new ClienteDAO(conexao);
+					dao.edita(cli, codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			*/
 		}
 	}
 

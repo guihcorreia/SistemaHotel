@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="JanelaMenuPrincipal"/>
-<fullyQualifiedTypeName name="JanelaDeCadastroCliente"/>
-<fullyQualifiedTypeName name="src.JanelaDeCadastroDeCaract"/>
-<fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="JanelaDeCadastroQuarto"/>
-<fullyQualifiedTypeName name="JanelaDeCadastroDeCaract.MostrarListener"/>
-<fullyQualifiedTypeName name="javax.swing.JDialog"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="JanelaDeCadastroQuarto.AdicionaListener"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
 <fullyQualifiedTypeName name="teste.MostrarListener"/>
 <fullyQualifiedTypeName name="teste.SairListener"/>
@@ -60,4 +51,13 @@
 <fullyQualifiedTypeName name="ClienteDAO"/>
 <fullyQualifiedTypeName name="JanelaMenuPrincipal.Lis22"/>
 <fullyQualifiedTypeName name="JanelaDeRelatorioHospedagem"/>
+<fullyQualifiedTypeName name="java.awt.Event"/>
+<fullyQualifiedTypeName name="java.awt.Cursor"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="JanelaDeEditarUsuario"/>
+<fullyQualifiedTypeName name="ContaDAO"/>
+<fullyQualifiedTypeName name="JanelaDeRegistrarDebito"/>
+<fullyQualifiedTypeName name="JanelaDeDebito.NovoDebListener"/>
+<fullyQualifiedTypeName name="JanelaDeDebito.ComboListener"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>

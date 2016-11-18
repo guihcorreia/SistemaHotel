@@ -27,7 +27,10 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
-
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -81,13 +84,30 @@ public class JanelaDeCadastroCliente {
 	private JDialog frame;
 	
 	private int op;
+	
+	
+	MaskFormatter maskCPF;
 
 	public JanelaDeCadastroCliente() {
-		lbNum = new JLabel("Numero");
-		tfNum = new JTextField(2);
+		lbNum = new JLabel("Numero *");
+		tfNum = new JTextFieldSomenteNumeros();
+		tfNum.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfNum.setBackground(Color.white);
+			}
+			
+		});
 		
-		lbNome = new JLabel("Nome");
+		lbNome = new JLabel("Nome *");
 		tfNome = new JTextField(30);
+		tfNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfNome.setBackground(Color.white);
+			}
+		});
+		
 
 		
 		lbEmail = new JLabel("E-mail");
@@ -95,56 +115,93 @@ public class JanelaDeCadastroCliente {
 
 		lbData = new JLabel("Data");
 		
-		lbIden = new JLabel("Identidade");
+		lbIden = new JLabel("Identidade *");
 		try {
 			MaskFormatter maskIden = new MaskFormatter("UU-##.###.###");
 			tfIden = new JFormattedTextField(maskIden);
+			tfIden.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					tfIden.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		//tfIden = new JTextField(10);
 		
-		lbCPF = new JLabel("CPF");
+		lbCPF = new JLabel("CPF *");
 		try {
-			MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
+			maskCPF = new MaskFormatter("###.###.###-##");
 			tfCPF = new JFormattedTextField(maskCPF);
+			tfCPF.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					tfCPF.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		//tfCPF = new JTextField(10);
 		
-		lbTel = new JLabel("Telefone");
+		lbTel = new JLabel("Telefone *");
 		try {
 			MaskFormatter maskTel = new MaskFormatter("(##)####-####");
 			tfTel = new JFormattedTextField(maskTel);
+			tfTel.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfTel.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		//tfTel = new JTextField(10);
 
-		lbData = new JLabel("Data de Nascimento");
+		lbData = new JLabel("Data de Nascimento *");
 		
-		lbEndereco = new JLabel("Endereço");
+		lbEndereco = new JLabel("Endere\u00E7o *");
 		
-		lbCEP = new JLabel("CEP");
+		lbCEP = new JLabel("CEP *");
 		
-		lbCidade = new JLabel("Cidade");
+		lbCidade = new JLabel("Cidade *");
 		
-		lbUF = new JLabel("UF");
+		lbUF = new JLabel("UF *");
+		
 		
 		
 		
 		tfLogradouro = new JTextField(25);
 		tfNumero = new JTextField(4);
 		tfEndereco = new JTextField(30);
+		tfEndereco.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfEndereco.setBackground(Color.white);
+			}
+		});
 		try {
 			MaskFormatter maskCEP = new MaskFormatter("#####-###");
 			tfCEP = new JFormattedTextField(maskCEP);
+			tfCEP.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfCEP.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		tfCEP.setColumns(6);
 		tfCidade = new JTextField(15);
+		tfCidade.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfCidade.setBackground(Color.white);
+			}
+		});
 		ComboBoxModel cbUFModel = 
 			new DefaultComboBoxModel(
 					new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"});
@@ -158,6 +215,12 @@ public class JanelaDeCadastroCliente {
 		try {
 			MaskFormatter mascara = new MaskFormatter("##/##/####");
 			tfData = new JFormattedTextField(mascara);
+			tfData.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfData.setBackground(Color.white);
+				}
+			});
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -172,7 +235,7 @@ public class JanelaDeCadastroCliente {
 
 		panel = new JPanel();
 		panel.setLayout(null);
-		panel.setPreferredSize(new java.awt.Dimension(496, 342));
+		panel.setPreferredSize(new Dimension(496, 342));
 
 		cons.gridx = 0;
 		cons.gridy = 0;
@@ -220,7 +283,7 @@ public class JanelaDeCadastroCliente {
 		cons.gridx = 1;
 		cons.gridy = 4;
 		panel.add(lbUF, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(3, 3, 3, 3), 0, 0));
-		lbUF.setBounds(283, 238, 24, 16);
+		lbUF.setBounds(283, 238, 33, 16);
 
 		cons.gridy = 5;
 		cons.gridwidth = 1;
@@ -286,7 +349,7 @@ public class JanelaDeCadastroCliente {
 		cons.gridy = 8;
 		cons.gridwidth = 1;
 		panel.add(lbData, new GridBagConstraints(2, 8, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(3, 3, 3, 3), 0, 0));
-		lbData.setBounds(355, 115, 122, 16);
+		lbData.setBounds(355, 115, 129, 16);
 
 		cons.gridy = 9;
 		cons.gridwidth = 2;
@@ -354,7 +417,9 @@ public class JanelaDeCadastroCliente {
 		frame.setLocationRelativeTo(null); // coloca no meio
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Sair do
 		frame.setResizable(false);														// programa
-		frame.setVisible(true); // torna a janela visÃ­vel
+		frame.setVisible(true); // torna a janela visÃ­vel.ss
+		
+		
 
 	}
 
@@ -362,8 +427,81 @@ public class JanelaDeCadastroCliente {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
-			op = 1;
-			frame.dispose();
+			boolean erro = false;
+
+			//ValidaCPF valida = new ValidaCPF();
+			String cpf = tfCPF.getText().substring(0, 3);
+			cpf = cpf + tfCPF.getText().substring(4, 7);
+			cpf = cpf + tfCPF.getText().substring(8, 11);
+			cpf = cpf + tfCPF.getText().substring(12, 14);
+			
+			
+			if(tfNome.getText() == null || tfNome.getText().isEmpty()){
+				tfNome.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfIden.getText().equals("  -  .   .   ")){
+				tfIden.setBackground(Color.pink);
+				erro = true;
+			}
+				
+			if(tfCPF.getText().equals("   .   .   -  ")){
+				tfCPF.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfTel.getText().equals("(  )    -    ")){
+				tfTel.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfData.getText().equals("  /  /    ")){
+				tfData.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfEndereco.getText() == null || tfEndereco.getText().isEmpty()){
+				tfEndereco.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfNum.getText() == null || tfNum.getText().isEmpty()){
+				tfNum.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfCidade.getText() == null || tfCidade.getText().isEmpty()){
+				tfCidade.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfCEP.getText().equals("     -   ")){
+				tfCEP.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			
+			if (!erro && !ValidaCPF.isCPF(cpf)){
+					JOptionPane.showMessageDialog(frame, "Informe um CPF válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+					erro = true;
+			}
+			else if (!erro && tfEmail.getText() != null && !tfEmail.getText().isEmpty()){
+					if(!EmailValidator.isEmailValid(tfEmail.getText())){
+						JOptionPane.showMessageDialog(frame, "Informe um email válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+						erro = true;
+					}else{
+						op = 1;
+						frame.dispose();
+					}
+				}
+			else if(!erro){
+				op = 1;
+				frame.dispose();
+			}
+			else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 

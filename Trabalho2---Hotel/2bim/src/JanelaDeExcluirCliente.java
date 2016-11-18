@@ -132,6 +132,7 @@ public class JanelaDeExcluirCliente implements ActionListener {
 		}
 		{
 			tfCodCli = new JTextField();
+			tfCodCli.setEditable(false);
 			panelTable.add(tfCodCli);
 			tfCodCli.setBounds(155, 12, 57, 23);
 		}
@@ -145,7 +146,7 @@ public class JanelaDeExcluirCliente implements ActionListener {
 
 
 
-		buttonOk = new JButton("Ok");
+		buttonOk = new JButton("Cancelar");
 		buttonOk.addActionListener(this);
 		
 
@@ -184,19 +185,23 @@ public class JanelaDeExcluirCliente implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Connection conexao;
-			int codigo = Integer.parseInt(tfCodCli.getText());
-			try {
-				conexao = ConnectionFactory.getConnection();
-				ClienteDAO dao = new ClienteDAO(conexao);
-				dao.excluir(codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			if(!tfCodCli.getText().isEmpty() && tfCodCli != null){
+				Connection conexao;
+				int codigo = Integer.parseInt(tfCodCli.getText());
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ClienteDAO dao = new ClienteDAO(conexao);
+					dao.excluir(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+				frame.dispose();
+				JanelaDeExcluirCliente j10 = new JanelaDeExcluirCliente();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um cliente para excluir", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
-			frame.dispose();
-			JanelaDeExcluirCliente j10 = new JanelaDeExcluirCliente();
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

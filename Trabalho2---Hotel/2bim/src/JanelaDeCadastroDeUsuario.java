@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 
@@ -37,21 +40,36 @@ public class JanelaDeCadastroDeUsuario {
 	private JTextField tfConfirma;
 	
 	private int op;
+	private JLabel lblPerguntaDeSegurana;
+	private JTextField tfPergunta;
+	private JTextField tfResposta;
 	
 	public JanelaDeCadastroDeUsuario(){
-		labelNome = new JLabel("Nome");
+		labelNome = new JLabel("Nome *");
 		labelNome.setBounds(5, 5, 100, 20);
 		tfNome = new JTextField(20);
+		tfNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				tfNome.setBackground(Color.white);
+			}
+		});
 		tfNome.setBounds(5,30,250,20);
-		lbSenha = new JLabel("Senha");
-		lbSenha.setBounds(5, 117, 46, 20);
+		lbSenha = new JLabel("Senha *");
+		lbSenha.setBounds(5, 117, 69, 20);
 		tfSenha = new JPasswordField(20);
+		tfSenha.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfSenha.setBackground(Color.white);
+			}
+		});
 		tfSenha.setBounds(5,142,117,20);
 		btOk = new JButton("Ok");
-		btOk.setBounds(66, 179, 90, 20);
+		btOk.setBounds(66, 276, 90, 20);
 		btOk.addActionListener(new OkListener());
 		JButton btSair = new JButton("Cancelar");
-		btSair.setBounds(166, 179, 89, 20);
+		btSair.setBounds(166, 276, 89, 20);
 		btSair.addActionListener(new SairListener());
 		
 		panel = new JPanel();
@@ -69,24 +87,66 @@ public class JanelaDeCadastroDeUsuario {
 		frame.getContentPane().add(panel);
 		panel.setPreferredSize(new java.awt.Dimension(234, 145));
 		
-		JLabel lblLogin = new JLabel("Login");
+		JLabel lblLogin = new JLabel("Login *");
 		lblLogin.setBounds(5, 61, 46, 14);
 		panel.add(lblLogin);
 		
 		tfLogin = new JTextField();
+		tfLogin.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfLogin.setBackground(Color.white);
+			}
+		});
 		tfLogin.setBounds(5, 86, 250, 20);
 		panel.add(tfLogin);
 		tfLogin.setColumns(10);
 		
-		JLabel lblConfirmeASenha = new JLabel("Confirme a senha");
+		JLabel lblConfirmeASenha = new JLabel("Confirme a senha *");
 		lblConfirmeASenha.setBounds(132, 120, 117, 14);
 		panel.add(lblConfirmeASenha);
 		
 		tfConfirma = new JPasswordField(20);
+		tfConfirma.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfConfirma.setBackground(Color.white);
+			}
+		});
 		tfConfirma.setBounds(132, 142, 123, 20);
 		panel.add(tfConfirma);
 		tfConfirma.setColumns(10);
-		frame.setSize(271, 240);
+		
+		lblPerguntaDeSegurana = new JLabel("Pergunta de seguran\u00E7a *");
+		lblPerguntaDeSegurana.setBounds(5, 173, 152, 14);
+		panel.add(lblPerguntaDeSegurana);
+		
+		tfPergunta = new JTextField();
+		tfPergunta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfPergunta.setBackground(Color.white);
+			}
+		});
+		tfPergunta.setBounds(5, 195, 250, 20);
+		panel.add(tfPergunta);
+		tfPergunta.setColumns(10);
+		
+		JLabel lblResposta = new JLabel("Resposta *");
+		lblResposta.setBounds(5, 226, 117, 14);
+		panel.add(lblResposta);
+		
+		tfResposta = new JPasswordField(20);
+		tfResposta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tfResposta.setBackground(Color.white);
+			}
+		});
+		tfResposta.setBounds(5, 245, 250, 20);
+		panel.add(tfResposta);
+		tfResposta.setColumns(10);
+		frame.setSize(267, 334);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
@@ -100,18 +160,39 @@ public class JanelaDeCadastroDeUsuario {
 	private class OkListener  implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (tfNome.getText().equals(""))
-				JOptionPane.showMessageDialog(frame, "Campo Obrigatório! Preencha o campo NOME.", "Erro", JOptionPane.ERROR_MESSAGE);
-			else if (tfLogin.getText().equals(""))
-				JOptionPane.showMessageDialog(frame, "Campo Obrigatório! Preencha o campo LOGIN.", "Erro", JOptionPane.ERROR_MESSAGE);
-			else if (tfSenha.getText().equals("") || tfConfirma.getText().equals(""))
-				JOptionPane.showMessageDialog(frame, "Preencha o campo senha e a confirme.", "Erro", JOptionPane.ERROR_MESSAGE);
-			else{
+			boolean erro=false;
+			if (tfNome.getText().equals("")){
+				tfNome.setBackground(Color.pink);
+				erro = true;
+			}
+			if (tfLogin.getText().equals("")){
+				tfLogin.setBackground(Color.pink);
+				erro = true;
+			}
+			if (tfSenha.getText().equals("")){
+				tfSenha.setBackground(Color.pink);
+				erro = true;
+			}
+			if (tfConfirma.getText().equals("")){
+				tfConfirma.setBackground(Color.pink);
+				erro = true;
+			}
+			if (tfPergunta.getText().equals("")){
+				tfPergunta.setBackground(Color.pink);
+				erro = true;
+			}
+			if (tfResposta.getText().equals("")){
+				tfResposta.setBackground(Color.pink);
+				erro = true;
+			}
+			if(!erro){
 				if (tfSenha.getText().equals(tfConfirma.getText())){
 					op = 1;
 					frame.dispose();
 				}else if(!tfSenha.getText().equals(tfConfirma.getText()))
-					JOptionPane.showMessageDialog(frame, "Erro! As senhas não coincidem!", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "As senhas informadas não coincidem", "Erro", JOptionPane.ERROR_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -130,6 +211,12 @@ public class JanelaDeCadastroDeUsuario {
 	}
 	public JTextField getTfLogin(){
 		return tfLogin;
+	}
+	public JTextField getTfPergunta(){
+		return tfPergunta;
+	}
+	public JTextField getTfResposta(){
+		return tfResposta;
 	}
 	public int getOp(){
 		return op;

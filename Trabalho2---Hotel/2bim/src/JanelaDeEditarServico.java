@@ -130,6 +130,7 @@ public class JanelaDeEditarServico implements ActionListener {
 		}
 		{
 			tfCodCaract = new JTextField();
+			tfCodCaract.setEditable(false);
 			panelTable.add(tfCodCaract);
 			tfCodCaract.setBounds(150, 9, 57, 23);
 		}
@@ -182,9 +183,13 @@ public class JanelaDeEditarServico implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int cod = Integer.parseInt(tfCodCaract.getText());
-			JanelaDeEditarServico2 janEdiServico = new JanelaDeEditarServico2(cod);
-			frame.dispose();
+			if(!tfCodCaract.getText().isEmpty() && tfCodCaract != null){
+				int cod = Integer.parseInt(tfCodCaract.getText());
+				JanelaDeEditarServico2 janEdiServico = new JanelaDeEditarServico2(cod);
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um serviço para editar", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	

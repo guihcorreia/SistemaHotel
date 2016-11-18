@@ -129,6 +129,7 @@ public class JanelaDeExcluirProduto implements ActionListener {
 		}
 		{
 			tfCod = new JTextField();
+			tfCod.setEditable(false);
 			panelTable.add(tfCod);
 			tfCod.setBounds(152, 9, 57, 23);
 		}
@@ -142,7 +143,7 @@ public class JanelaDeExcluirProduto implements ActionListener {
 
 
 
-		buttonOk = new JButton("Ok");
+		buttonOk = new JButton("Cancelar");
 		buttonOk.addActionListener(this);
 		
 
@@ -181,19 +182,23 @@ public class JanelaDeExcluirProduto implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Connection conexao;
-			int codigo = Integer.parseInt(tfCod.getText());
-			try {
-				conexao = ConnectionFactory.getConnection();
-				ProdutoDAO dao = new ProdutoDAO(conexao);
-				dao.excluir(codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			if(!tfCod.getText().isEmpty() && tfCod != null){
+				Connection conexao;
+				int codigo = Integer.parseInt(tfCod.getText());
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ProdutoDAO dao = new ProdutoDAO(conexao);
+					dao.excluir(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "Produto excluído com sucesso!");
+				frame.dispose();
+				JanelaDeExcluirProduto j10 = new JanelaDeExcluirProduto();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um produto para excluir", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			JOptionPane.showMessageDialog(null, "Produto excluído com sucesso!");
-			frame.dispose();
-			JanelaDeExcluirProduto j10 = new JanelaDeExcluirProduto();
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

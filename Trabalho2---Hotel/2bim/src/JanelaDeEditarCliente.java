@@ -6,12 +6,15 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 
 
@@ -59,8 +63,8 @@ public class JanelaDeEditarCliente implements ActionListener {
 	private JTable table;
 	private DefaultTableModel modelo;
 	private JButton buttonOk;
-
-
+	ArrayList<Cliente> vetor;
+	ClienteDAO daoCliente;
 	
 
 	public static void main(String[] args) {
@@ -72,10 +76,10 @@ public class JanelaDeEditarCliente implements ActionListener {
 		String colunas[] = new String[] {"ID", "Nome", "CPF"};
 		modelo = new DefaultTableModel(colunas,0);
 
-		ArrayList<Cliente> vetor = new ArrayList<Cliente>();
+		vetor = new ArrayList<Cliente>();
 
 		Connection conexao = null;
-		ClienteDAO daoCliente = null;
+		daoCliente = null;
 
 		
 		try {
@@ -131,7 +135,20 @@ public class JanelaDeEditarCliente implements ActionListener {
 			lbCodCli.setBounds(58, 15, 103, 16);
 		}
 		{
-			tfCodCli = new JTextField();
+			DecimalFormat dFormat = new DecimalFormat ( "#######" ) ;
+            NumberFormatter Formatter = new NumberFormatter ( dFormat ) ;
+            Formatter.setFormat ( dFormat ) ;
+            Formatter.setAllowsInvalid ( false ) ; 
+            tfCodCli = new JFormattedTextField(Formatter);
+            tfCodCli.setEditable(false);
+            
+           // JFormattedTextField textField = new JFormattedTextField ( ) ;
+           // textField.setFormatterFactory ( new DefaultFormatterFactory ( Formatter ) ) ;
+			
+			
+			
+			
+			//tfCodCli = new JTextField();
 			panelTable.add(tfCodCli);
 			tfCodCli.setBounds(155, 12, 57, 23);
 		}
@@ -184,9 +201,13 @@ public class JanelaDeEditarCliente implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int codigo = Integer.parseInt(tfCodCli.getText());
-			JanelaDeEditarCliente2 JanEditar = new JanelaDeEditarCliente2(codigo);
-			frame.dispose();
+			if(!tfCodCli.getText().isEmpty() && tfCodCli != null){
+				int codigo = Integer.parseInt(tfCodCli.getText());
+				JanelaDeEditarCliente2 JanEditar = new JanelaDeEditarCliente2(codigo);
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um cliente para editar", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

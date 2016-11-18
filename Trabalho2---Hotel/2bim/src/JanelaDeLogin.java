@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import java.awt.Color;
 
 
 
@@ -47,11 +49,12 @@ public class JanelaDeLogin {
 		lbSenha.setBounds(5, 50, 200, 20);
 		tfSenha = new JPasswordField(20);
 		tfSenha.setBounds(5,70,200,20);
+		tfSenha.addActionListener(new OkListener());
 		btOk = new JButton("Ok");
-		btOk.setBounds(5, 100, 90, 20);
+		btOk.setBounds(15, 126, 90, 20);
 		btOk.addActionListener(new OkListener());
 		JButton btSair = new JButton("Cancelar");
-		btSair.setBounds(116, 100, 89, 20);
+		btSair.setBounds(116, 126, 89, 20);
 		btSair.addActionListener(new SairListener());
 		
 		panel = new JPanel();
@@ -66,9 +69,20 @@ public class JanelaDeLogin {
 		frame = new JDialog();
 		frame.setTitle("Login de acesso - Hotel");
 		frame.setModal(true);
-		frame.add(panel);
+		frame.getContentPane().add(panel);
 		panel.setPreferredSize(new java.awt.Dimension(234, 145));
-		frame.setSize(235, 170);
+		
+		JLabel lblRecuperarSenha = new JLabel("Recuperar senha");
+		lblRecuperarSenha.setForeground(Color.BLUE);
+		lblRecuperarSenha.setBounds(92, 101, 113, 14);
+		lblRecuperarSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		lblRecuperarSenha.addMouseListener(new java.awt.event.MouseAdapter(){
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				lblRecuperarSenhaMouseClicked(evt);
+			}
+		});
+		panel.add(lblRecuperarSenha);
+		frame.setSize(219, 183);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
@@ -122,11 +136,47 @@ public class JanelaDeLogin {
 			frame.dispose();
 		}
 	}
+	private void lblRecuperarSenhaMouseClicked(java.awt.event.MouseEvent evt){
+		String login = "", resposta = "";
+		
+		login = JOptionPane.showInputDialog("Digite seu login: ", login).toString();
+		Usuario usu = new Usuario();
+
+		Connection conexao = null;
+		UsuarioDAO daoUsuario = null;
+
+		
+		try {
+			conexao = ConnectionFactory.getConnection();
+			daoUsuario = new UsuarioDAO(conexao);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			usu = daoUsuario.getPorLogin(login);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(usu.getPergunta().equals("erro")){
+			JOptionPane.showMessageDialog(frame, "Login inexistente!", "Erro", JOptionPane.ERROR_MESSAGE);
+		}else{
+			resposta = JOptionPane.showInputDialog(usu.getPergunta(), resposta).toString();
+			if(resposta.equals(usu.getResposta())){
+				JanelaDeEditarUsuario2 janEdU = new JanelaDeEditarUsuario2(usu.getCod());
+			}else{
+				JOptionPane.showMessageDialog(frame, "Resposta incorreta!", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		
+	}
+	
 	public JTextField getTfSenha(){
 		return tfSenha;
 	}
 	public JTextField getTfUsu(){
 		return tfNome;
 	}
-	
 }

@@ -132,6 +132,7 @@ public class JanelaDeEditarQuarto implements ActionListener {
 		}
 		{
 			tfCodQua = new JTextField();
+			tfCodQua.setEditable(false);
 			panelTable.add(tfCodQua);
 			tfCodQua.setBounds(86, 9, 57, 23);
 		}
@@ -184,9 +185,13 @@ public class JanelaDeEditarQuarto implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int codigo = Integer.parseInt(tfCodQua.getText());
-			JanelaDeEditarQuarto2 JanEditar = new JanelaDeEditarQuarto2(codigo);
-			frame.dispose();
+			if(!tfCodQua.getText().isEmpty() && tfCodQua != null){
+				int codigo = Integer.parseInt(tfCodQua.getText());
+				JanelaDeEditarQuarto2 JanEditar = new JanelaDeEditarQuarto2(codigo);
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um quarto para editar", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

@@ -355,7 +355,15 @@ public class JanelaDeConsumo {
 			}
 			
 			Consumo consu = new Consumo();
-			consu.setCod_conta(vetHosp.get(0).getCod());
+			ContaDAO daoCont = null;
+			try {
+				conexao = ConnectionFactory.getConnection();
+				daoCont = new ContaDAO(conexao);
+				consu.setCod_conta(daoCont.listaPorCodHosp(vetHosp.get(0).getCod()));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 			
 			Calendar calen = new GregorianCalendar();
 			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
@@ -444,5 +452,4 @@ public class JanelaDeConsumo {
 			frame.dispose();
 		}
 	}
-	
 }

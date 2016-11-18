@@ -132,6 +132,7 @@ public class JanelaDeExcluirQuarto implements ActionListener {
 		}
 		{
 			tfCodQua = new JTextField();
+			tfCodQua.setEditable(false);
 			panelTable.add(tfCodQua);
 			tfCodQua.setBounds(86, 9, 57, 23);
 		}
@@ -145,7 +146,7 @@ public class JanelaDeExcluirQuarto implements ActionListener {
 
 
 
-		buttonOk = new JButton("Ok");
+		buttonOk = new JButton("Cancelar");
 		buttonOk.addActionListener(this);
 		
 
@@ -184,23 +185,27 @@ public class JanelaDeExcluirQuarto implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Connection conexao;
-			int codigo = Integer.parseInt(tfCodQua.getText());
-			try {
-				conexao = ConnectionFactory.getConnection();
-				QuartoDAO dao = new QuartoDAO(conexao);
-				Quarto_CaractDAO dao2 = new Quarto_CaractDAO(conexao);
-				dao.excluir(codigo);
-				dao2.excluir(codigo);
+			if(!tfCodQua.getText().isEmpty() && tfCodQua != null){
+				Connection conexao;
+				int codigo = Integer.parseInt(tfCodQua.getText());
+				try {
+					conexao = ConnectionFactory.getConnection();
+					QuartoDAO dao = new QuartoDAO(conexao);
+					Quarto_CaractDAO dao2 = new Quarto_CaractDAO(conexao);
+					dao.excluir(codigo);
+					dao2.excluir(codigo);
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+				
+				JOptionPane.showMessageDialog(null, "Quarto excluído com sucesso!");
+				frame.dispose();
+				JanelaDeExcluirQuarto j10 = new JanelaDeExcluirQuarto();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um quarto para excluir", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			
-			JOptionPane.showMessageDialog(null, "Quarto excluído com sucesso!");
-			frame.dispose();
-			JanelaDeExcluirQuarto j10 = new JanelaDeExcluirQuarto();
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

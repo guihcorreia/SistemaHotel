@@ -118,6 +118,7 @@ public class JanelaDeExcluirServico implements ActionListener {
 		}
 		{
 			tfCod = new JTextField();
+			tfCod.setEditable(false);
 			panelTable.add(tfCod);
 			tfCod.setBounds(152, 9, 57, 23);
 		}
@@ -131,7 +132,7 @@ public class JanelaDeExcluirServico implements ActionListener {
 
 
 
-		buttonOk = new JButton("Ok");
+		buttonOk = new JButton("Cancelar");
 		buttonOk.addActionListener(this);
 		
 
@@ -170,19 +171,23 @@ public class JanelaDeExcluirServico implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Connection conexao;
-			int codigo = Integer.parseInt(tfCod.getText());
-			try {
-				conexao = ConnectionFactory.getConnection();
-				ServicoDAO dao = new ServicoDAO(conexao);
-				dao.excluir(codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			if(!tfCod.getText().isEmpty() && tfCod != null){
+				Connection conexao;
+				int codigo = Integer.parseInt(tfCod.getText());
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ServicoDAO dao = new ServicoDAO(conexao);
+					dao.excluir(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "Serviço excluído com sucesso!");
+				frame.dispose();
+				JanelaDeExcluirServico j10 = new JanelaDeExcluirServico();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um serviço para excluir", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			JOptionPane.showMessageDialog(null, "Serviço excluído com sucesso!");
-			frame.dispose();
-			JanelaDeExcluirServico j10 = new JanelaDeExcluirServico();
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

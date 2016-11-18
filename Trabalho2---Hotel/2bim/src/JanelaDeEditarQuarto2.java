@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -147,12 +150,18 @@ public class JanelaDeEditarQuarto2 {
 		{
 			lbNum = new JLabel();
 			panel.add(lbNum);
-			lbNum.setText("Número");
-			lbNum.setBounds(12, 12, 51, 14);
+			lbNum.setText("N\u00FAmero *");
+			lbNum.setBounds(12, 12, 67, 14);
 			lbNum.setFont(new java.awt.Font("Tahoma",1,12));
 		}
 		{
-			tfNum = new JTextField();
+			tfNum = new JTextFieldSomenteNumeros();
+			tfNum.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfNum.setBackground(Color.white);
+				}
+			});
 			panel.add(tfNum);
 			tfNum.setBounds(12, 32, 51, 21);
 			tfNum.setText(""+vetor2.get(0).getNumero());
@@ -268,7 +277,7 @@ public class JanelaDeEditarQuarto2 {
 		{
 			tfTdCar = new JLabel();
 			panel.add(tfTdCar);
-			tfTdCar.setText("Características Gerais - Hotel");
+			tfTdCar.setText("Caracter\u00EDsticas Gerais");
 			tfTdCar.setBounds(12, 70, 160, 14);
 			tfTdCar.setFont(new java.awt.Font("Tahoma",1,12));
 		}
@@ -290,18 +299,24 @@ public class JanelaDeEditarQuarto2 {
 		{
 			lbValorDiaria = new JLabel();
 			panel.add(lbValorDiaria);
-			lbValorDiaria.setText("Valor da Diária");
-			lbValorDiaria.setBounds(75, 13, 101, 14);
+			lbValorDiaria.setText("Valor da Di\u00E1ria *");
+			lbValorDiaria.setBounds(83, 13, 101, 14);
 			lbValorDiaria.setFont(new java.awt.Font("Tahoma",1,12));
 		}
 		{
 			tfValorDiaria = new JTextField();
+			tfValorDiaria.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfValorDiaria.setBackground(Color.white);
+				}
+			});
 			panel.add(tfValorDiaria);
-			tfValorDiaria.setBounds(75, 32, 90, 21);
+			tfValorDiaria.setBounds(83, 32, 90, 21);
 			tfValorDiaria.setText(""+vetor2.get(0).getValorDiaria());
 		}
 		frame = new JDialog();
-		frame.setTitle("Cadastro de Quartos - Hotel");
+		frame.setTitle("Edi\u00E7\u00E3o de Quartos - Hotel");
 		frame.setModal(true);
 		frame.getContentPane().add(BorderLayout.CENTER, panel);
 		frame.pack(); // ajusta o tamanho da janela (frame)
@@ -341,6 +356,18 @@ public class JanelaDeEditarQuarto2 {
 	private class MostrarListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			boolean erro = false;
+			if(tfNum.getText() == null || tfNum.getText().isEmpty()){
+				tfNum.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfValorDiaria.getText() == null || tfValorDiaria.getText().isEmpty()){
+				tfValorDiaria.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(!erro){
 			Quarto quarto = new Quarto();
 			quarto.setNumero(Integer.parseInt(getTfNum().getText()));
 			quarto.setValorDiaria(Double.parseDouble(getTfValorDiaria().getText()));
@@ -387,6 +414,9 @@ public class JanelaDeEditarQuarto2 {
 				e.printStackTrace();
 			}
 			frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	private class AdicionaListener implements ActionListener {

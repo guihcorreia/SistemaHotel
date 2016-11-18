@@ -130,6 +130,7 @@ public class JanelaDeEditarCaract implements ActionListener {
 		}
 		{
 			tfCodCaract = new JTextField();
+			tfCodCaract.setEditable(false);
 			panelTable.add(tfCodCaract);
 			tfCodCaract.setBounds(174, 9, 57, 23);
 		}
@@ -182,9 +183,14 @@ public class JanelaDeEditarCaract implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int cod = Integer.parseInt(tfCodCaract.getText());
-			JanelaDeEditarCaract2 janEdiCaract = new JanelaDeEditarCaract2(cod);
-			frame.dispose();
+			if(!tfCodCaract.getText().isEmpty() && tfCodCaract != null){
+				int cod = Integer.parseInt(tfCodCaract.getText());
+				JanelaDeEditarCaract2 janEdiCaract = new JanelaDeEditarCaract2(cod);
+				frame.dispose();
+			}
+			else{
+				JOptionPane.showMessageDialog(frame, "Selecione uma característica para editar", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	

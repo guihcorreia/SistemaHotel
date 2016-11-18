@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -30,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 /**
@@ -123,6 +126,12 @@ public class JanelaDeEditarCaract2 {
 		panel.setPreferredSize(new java.awt.Dimension(316, 152));
 		{
 			tfNome = new JTextField();
+			tfNome.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent arg0) {
+					tfNome.setBackground(Color.white);
+				}
+			});
 			panel.add(tfNome);
 			tfNome.setPreferredSize(new java.awt.Dimension(227, 21));
 			tfNome.setSize(227, 21);
@@ -132,7 +141,7 @@ public class JanelaDeEditarCaract2 {
 		{
 			lbNomeCaract = new JLabel();
 			panel.add(lbNomeCaract);
-			lbNomeCaract.setText("Nome");
+			lbNomeCaract.setText("Nome *");
 			lbNomeCaract.setFont(new java.awt.Font("Tahoma",1,12));
 			lbNomeCaract.setBounds(77, 13, 51, 14);
 		}
@@ -204,19 +213,28 @@ public class JanelaDeEditarCaract2 {
 	private class MostrarListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Caract caract = new Caract();
-			caract.setNome(tfNome.getText());
-			caract.setDescricao(tfDescCaract.getText());
-			Connection conexao;
-			int codigo = getOp();
-			try {
-				conexao = ConnectionFactory.getConnection();
-				CaractDAO dao = new CaractDAO(conexao);
-				dao.edita(caract, codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			boolean erro = false;
+			if(tfNome.getText() == null || tfNome.getText().isEmpty()){
+				tfNome.setBackground(Color.pink);
+				erro = true;
 			}
-			frame.dispose();
+			if(!erro){
+				Caract caract = new Caract();
+				caract.setNome(tfNome.getText());
+				caract.setDescricao(tfDescCaract.getText());
+				Connection conexao;
+				int codigo = getOp();
+				try {
+					conexao = ConnectionFactory.getConnection();
+					CaractDAO dao = new CaractDAO(conexao);
+					dao.edita(caract, codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 

@@ -74,6 +74,32 @@ public class ContaDAO {
 		}
 		return conta;
 	}
+	public int listaPorCodHosp(int cod) throws SQLException {
+		String sql = "SELECT * FROM hotel.conta WHERE `hospedagem_cod` = ?";
+		PreparedStatement stmt = null;
+		try{
+			stmt = conexao.prepareStatement(sql);
+			
+			stmt.setInt(1, cod);
+			
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ResultSet rs = stmt.executeQuery();
+		Conta conta = new Conta();
+
+		while (rs.next()) {
+			
+			conta.setCod(rs.getInt("cod"));
+			conta.setCod_hospedagem(rs.getInt("hospedagem_cod"));
+			conta.setValorTotal(rs.getDouble("valorTotal"));
+			conta.setPago(rs.getString("pago"));
+
+		}
+		return conta.getCod();
+	}
 	public void tornaPago(int cod){
 		String sql = "UPDATE `hotel`.`conta` SET `pago` = 'true' WHERE `conta`.`cod` = ?;"; 
 		PreparedStatement stmt;

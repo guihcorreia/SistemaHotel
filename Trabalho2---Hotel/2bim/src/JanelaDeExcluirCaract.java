@@ -129,6 +129,7 @@ public class JanelaDeExcluirCaract implements ActionListener {
 		}
 		{
 			tfCodCaract = new JTextField();
+			tfCodCaract.setEditable(false);
 			panelTable.add(tfCodCaract);
 			tfCodCaract.setBounds(174, 9, 57, 23);
 		}
@@ -142,7 +143,7 @@ public class JanelaDeExcluirCaract implements ActionListener {
 
 
 
-		buttonOk = new JButton("Ok");
+		buttonOk = new JButton("Cancelar");
 		buttonOk.addActionListener(this);
 		
 
@@ -181,19 +182,23 @@ public class JanelaDeExcluirCaract implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Connection conexao;
-			int codigo = Integer.parseInt(tfCodCaract.getText());
-			try {
-				conexao = ConnectionFactory.getConnection();
-				CaractDAO dao = new CaractDAO(conexao);
-				dao.excluir(codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			if(!tfCodCaract.getText().isEmpty() && tfCodCaract != null){
+				Connection conexao;
+				int codigo = Integer.parseInt(tfCodCaract.getText());
+				try {
+					conexao = ConnectionFactory.getConnection();
+					CaractDAO dao = new CaractDAO(conexao);
+					dao.excluir(codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "Característica excluída com sucesso!");
+				frame.dispose();
+				JanelaDeExcluirCaract j10 = new JanelaDeExcluirCaract();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione uma característica para excluir", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			JOptionPane.showMessageDialog(null, "Característica excluída com sucesso!");
-			frame.dispose();
-			JanelaDeExcluirCaract j10 = new JanelaDeExcluirCaract();
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

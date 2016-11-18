@@ -238,6 +238,8 @@ public class Programa {
 						usuario.setNome(janCadUsu.getTfNome().getText());
 						usuario.setLogin(janCadUsu.getTfLogin().getText());
 						usuario.setSenha(janCadUsu.getTfSenha().getText());
+						usuario.setPergunta(janCadUsu.getTfPergunta().getText());
+						usuario.setResposta(janCadUsu.getTfResposta().getText());
 						
 						conexao = null;
 						daoUsuario = null;
@@ -256,6 +258,12 @@ public class Programa {
 				}
 				if (op == 24){
 					JanelaDeEditarUsuario janEditUsu = new JanelaDeEditarUsuario();
+				}
+				if (op == 25){
+					JanelaDeExcluirUsuario janExcUsu = new JanelaDeExcluirUsuario();
+				}
+				if (op == 26){
+					JanelaDeDebito janRegDeb = new JanelaDeDebito();
 				}
 				
 			}while(op != 6);

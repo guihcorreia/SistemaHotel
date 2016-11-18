@@ -132,6 +132,7 @@ public class JanelaDeEditarUsuario implements ActionListener {
 		}
 		{
 			tfCodUsu = new JTextField();
+			tfCodUsu.setEditable(false);
 			panelTable.add(tfCodUsu);
 			tfCodUsu.setBounds(155, 12, 57, 23);
 		}
@@ -184,9 +185,13 @@ public class JanelaDeEditarUsuario implements ActionListener {
 	private class ExcluirListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int codigo = Integer.parseInt(tfCodUsu.getText());
-			JanelaDeEditarUsuario2 JanEditar = new JanelaDeEditarUsuario2(codigo);
-			frame.dispose();
+			if(!tfCodUsu.getText().isEmpty() && tfCodUsu != null){
+				int codigo = Integer.parseInt(tfCodUsu.getText());
+				JanelaDeEditarUsuario2 JanEditar = new JanelaDeEditarUsuario2(codigo);
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Selecione um usuário para editar", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	private class MouseListener implements java.awt.event.MouseListener {

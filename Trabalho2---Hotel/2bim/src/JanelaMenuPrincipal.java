@@ -9,6 +9,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -47,11 +53,13 @@ public class JanelaMenuPrincipal {
 	private JMenuItem excluirCaract;
 	private JMenuItem cadCaract;
 	private JMenuItem excluirQuarto;
+	private JMenuItem excluirUsuario;
 	private JMenuItem excluirCli;
 	private JMenu menuExcluir;
 	private JMenuItem cadCli;
 	private JMenuItem cadQuarto;
 	private JMenuItem cadUsu;
+	private JMenuItem regDeb;
 	
 	private JMenu menuControle;
 	private JMenuItem checkIn;
@@ -121,6 +129,12 @@ public class JanelaMenuPrincipal {
 			menuControle.add(jMenuItem1);
 			jMenuItem1.setText("Registrar Consumo");
 			jMenuItem1.addActionListener(new Lis19());
+		}
+		{
+			regDeb = new JMenuItem();
+			menuControle.add(regDeb);
+			regDeb.setText("Registrar Débito");
+			regDeb.addActionListener(new Lis26());
 		}
 		//---------------------------
 
@@ -229,19 +243,90 @@ public class JanelaMenuPrincipal {
 				excluirServico.setText("Serviço");
 				excluirServico.addActionListener(new Lis14());
 			}
+			{
+				excluirUsuario = new JMenuItem();
+				menuExcluir.add(excluirUsuario);
+				excluirUsuario.setText("Usuário");
+				excluirUsuario.addActionListener(new Lis25());
+			}
 		}
 		barraMenus.add(sair);
 
 		frame = new JDialog();
-		frame.setTitle("Hotel San Diego - Sistema de Hotel");
+		frame.setTitle("Hotel Casta - Sistema de Hotel");
 		frame.setModal(true);
 		frame.setJMenuBar(barraMenus);
 		// frame.pack();
-		frame.setSize(352, 293);
+		frame.setSize(544, 359);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setPreferredSize(new java.awt.Dimension(352, 293));
+		
+		JButton btnNovoCliente = new JButton("");
+		btnNovoCliente.setIcon(new ImageIcon("C:\\Users\\Guilherme\\Documents\\GitHub\\SistemaHotel\\Trabalho2---Hotel\\2bim\\icons\\novocliente.png"));
+		
+		btnNovoCliente.addActionListener(new Lis1());
+		
+		JButton button = new JButton("");
+		button.setIcon(new ImageIcon("C:\\Users\\Guilherme\\Documents\\GitHub\\SistemaHotel\\Trabalho2---Hotel\\2bim\\icons\\consumo.png"));
+		
+		JButton button_1 = new JButton("");
+		button_1.setIcon(new ImageIcon("C:\\Users\\Guilherme\\Documents\\GitHub\\SistemaHotel\\Trabalho2---Hotel\\2bim\\icons\\checkin.png"));
+		
+		JButton button_2 = new JButton("");
+		button_2.setIcon(new ImageIcon("C:\\Users\\Guilherme\\Documents\\GitHub\\SistemaHotel\\Trabalho2---Hotel\\2bim\\icons\\checkout.png"));
+		
+		JLabel label = new JLabel("");
+		
+		JLabel lblNewLabel = new JLabel("");
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon("C:\\Users\\Guilherme\\Documents\\GitHub\\SistemaHotel\\Trabalho2---Hotel\\2bim\\icons\\logo.gif"));
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnNovoCliente)
+							.addGap(18)
+							.addComponent(button, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(button_1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+							.addGap(26)
+							.addComponent(button_2, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE))
+						.addComponent(label)
+						.addComponent(label_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNewLabel)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblNewLabel)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(label)
+									.addGap(100))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(27)
+							.addComponent(label_1)))
+					.addGap(32)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(button_1, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+						.addComponent(button_2, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(button, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnNovoCliente, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)))
+					.addGap(54))
+		);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 	private int op;
 	public int getOp(){
@@ -413,6 +498,20 @@ public class JanelaMenuPrincipal {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			op = 24;
+			frame.dispose();
+		}
+	}
+	private class Lis25 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			op = 25;
+			frame.dispose();
+		}
+	}
+	private class Lis26 implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			op = 26;
 			frame.dispose();
 		}
 	}

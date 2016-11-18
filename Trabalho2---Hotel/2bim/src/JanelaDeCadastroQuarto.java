@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -97,12 +100,18 @@ public class JanelaDeCadastroQuarto {
 		{
 			lbNum = new JLabel();
 			panel.add(lbNum);
-			lbNum.setText("Número");
-			lbNum.setBounds(12, 12, 51, 14);
+			lbNum.setText("N\u00FAmero *");
+			lbNum.setBounds(12, 12, 59, 14);
 			lbNum.setFont(new java.awt.Font("Tahoma",1,12));
 		}
 		{
-			tfNum = new JTextField();
+			tfNum = new JTextFieldSomenteNumeros();
+			tfNum.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfNum.setBackground(Color.white);
+				}
+			});
 			panel.add(tfNum);
 			tfNum.setBounds(12, 32, 51, 21);
 		}
@@ -224,14 +233,20 @@ public class JanelaDeCadastroQuarto {
 		{
 			lbValorDiaria = new JLabel();
 			panel.add(lbValorDiaria);
-			lbValorDiaria.setText("Valor da Diária");
-			lbValorDiaria.setBounds(75, 13, 101, 14);
+			lbValorDiaria.setText("Valor da Di\u00E1ria *");
+			lbValorDiaria.setBounds(83, 12, 101, 14);
 			lbValorDiaria.setFont(new java.awt.Font("Tahoma",1,12));
 		}
 		{
 			tfValorDiaria = new JTextField();
+			tfValorDiaria.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfValorDiaria.setBackground(Color.white);
+				}
+			});
 			panel.add(tfValorDiaria);
-			tfValorDiaria.setBounds(75, 32, 90, 21);
+			tfValorDiaria.setBounds(83, 31, 90, 21);
 		}
 		frame = new JDialog();
 		frame.setTitle("Cadastro de Quartos - Hotel");
@@ -274,8 +289,23 @@ public class JanelaDeCadastroQuarto {
 	private class MostrarListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			op = 1;
-			frame.dispose();
+			boolean erro = false;
+			if(tfNum.getText() == null || tfNum.getText().isEmpty()){
+				tfNum.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(tfValorDiaria.getText() == null || tfValorDiaria.getText().isEmpty()){
+				tfValorDiaria.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if(!erro){
+				op = 1;
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	private class AdicionaListener implements ActionListener {

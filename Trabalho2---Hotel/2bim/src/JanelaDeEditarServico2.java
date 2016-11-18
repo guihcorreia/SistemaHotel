@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -30,6 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 /**
@@ -88,6 +91,9 @@ public class JanelaDeEditarServico2 {
 		return op;
 	}
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public JanelaDeEditarServico2(int co) {
 		ArrayList<Servico> vetor = new ArrayList<Servico>();
 
@@ -122,6 +128,12 @@ public class JanelaDeEditarServico2 {
 		panel.setPreferredSize(new java.awt.Dimension(316, 152));
 		{
 			tfNome = new JTextField();
+			tfNome.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfNome.setBackground(Color.white);
+				}
+			});
 			panel.add(tfNome);
 			tfNome.setPreferredSize(new java.awt.Dimension(227, 21));
 			tfNome.setSize(227, 21);
@@ -131,7 +143,7 @@ public class JanelaDeEditarServico2 {
 		{
 			lbNome = new JLabel();
 			panel.add(lbNome);
-			lbNome.setText("Nome");
+			lbNome.setText("Nome *");
 			lbNome.setFont(new java.awt.Font("Tahoma",1,12));
 			lbNome.setBounds(77, 13, 51, 14);
 		}
@@ -153,12 +165,18 @@ public class JanelaDeEditarServico2 {
 		{
 			lbValor = new JLabel();
 			panel.add(lbValor);
-			lbValor.setText("Valor");
+			lbValor.setText("Valor *");
 			lbValor.setFont(new java.awt.Font("Tahoma",1,12));
 			lbValor.setBounds(12, 65, 65, 14);
 		}
 		{
 			tfValor = new JTextField();
+			tfValor.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					tfValor.setBackground(Color.white);
+				}
+			});
 			panel.add(tfValor);
 			tfValor.setBounds(12, 85, 292, 21);
 			tfValor.setText(""+vetor.get(0).getValor());
@@ -196,19 +214,35 @@ public class JanelaDeEditarServico2 {
 	private class MostrarListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Servico servico = new Servico();
-			servico.setNome(tfNome.getText());
-			servico.setValor(Double.parseDouble(tfValor.getText()));
-			Connection conexao;
-			int codigo = getOp();
-			try {
-				conexao = ConnectionFactory.getConnection();
-				ServicoDAO dao = new ServicoDAO(conexao);
-				dao.edita(servico, codigo);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+boolean erro = false;
+			
+			if(tfNome.getText() == null || tfNome.getText().isEmpty()){
+				tfNome.setBackground(Color.pink);
+				erro = true;
 			}
-			frame.dispose();
+			
+			if(tfValor.getText() == null || tfValor.getText().isEmpty()){
+				tfValor.setBackground(Color.pink);
+				erro = true;
+			}
+			
+			if (!erro){
+				Servico servico = new Servico();
+				servico.setNome(tfNome.getText());
+				servico.setValor(Double.parseDouble(tfValor.getText()));
+				Connection conexao;
+				int codigo = getOp();
+				try {
+					conexao = ConnectionFactory.getConnection();
+					ServicoDAO dao = new ServicoDAO(conexao);
+					dao.edita(servico, codigo);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				frame.dispose();
+			}else{
+				JOptionPane.showMessageDialog(frame, "Preencha todos os campos obrigatórios", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
